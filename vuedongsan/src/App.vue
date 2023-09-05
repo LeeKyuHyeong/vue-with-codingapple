@@ -2,7 +2,7 @@
   <img alt="Vue logo" src="./assets/logo.png">
   <div>
     <h4>XX 원룸</h4>
-    <p>XX 만원</p>
+    <p>{{ price }} 만원</p>
   </div>
   <div>
     <h4>XX 원룸</h4>
@@ -14,6 +14,11 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      price : 30,
+    }
+  },
   components: {
   }
 }
