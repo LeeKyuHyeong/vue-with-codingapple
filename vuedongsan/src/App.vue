@@ -1,23 +1,49 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <div>
-    <h4>XX 원룸</h4>
-    <p>{{ price1 }} 만원</p>
+
+  <div v-if="modalOpen" class="black-bg">
+    <div class="white-bg">
+      <button v-on:click="modalOpen = !modalOpen">닫기</button>
+      <h4>상세페이지</h4>
+      <p>상세페이지 내용</p>
+    </div>
   </div>
-  <div>
-    <h4>XX 원룸</h4>
-    <p>{{ price2 }} 만원</p>
+
+  
+  <div class="menu">
+    <a v-for="menu,i in menus" :key="i">
+      {{ menu }}
+    </a>
+  </div>
+  
+  <div v-for="product, i in products" :key="i">
+    <img src="./assets/room0.jpg" alt="house">
+    <h4 v-on:click="modalOpen = !modalOpen">{{ product }} 원룸</h4>
+    <p>{{ prices[i] }} 만원</p>
+    <span>사기매물 신고 : {{ fakeCnt[i] }}</span>&nbsp;
+    <button class="warn" v-on:click="addFakeCnt(i)">신고</button>
   </div>
 </template>
 
 <script>
 
+import content from './data/post.js';
+console.log(content);
+
 export default {
   name: 'App',
   data() {
     return {
-      price1 : 60,
-      price2 : 70,
+      modalOpen : false,
+      menus : ["Home", "Shop", "About"],
+      imgPath : ["./assets/room0.jpg", "./assets/room1.jpg", "./assets/room2.jpg"],
+      prices : [60, 70, 80],
+      fakeCnt : [0, 0, 0],
+      products : ['역삼동원룸', '천호동원룸', '마포구원룸']
+    }
+  },
+  methods : {
+    addFakeCnt(num) {
+      this.fakeCnt[num]++;
     }
   },
   components: {
@@ -26,6 +52,27 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+}
+div {
+  box-sizing: border-box;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+}
+.white-bg {
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,5 +80,17 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 40px;
+  color: #d4d4d6;
+  background: #000;
+}
+.menu a:hover {
+  opacity: 0.8;
 }
 </style>
