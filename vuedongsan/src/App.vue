@@ -2,7 +2,7 @@
 
   <div v-if="modalOpen" class="black-bg">
     <div class="white-bg">
-      <button v-on:click="modalOpen = !modalOpen">닫기</button>
+      <button v-on:click="changeState">닫기</button>
       <h4>상세페이지</h4>
       <p>상세페이지 내용</p>
     </div>
@@ -17,7 +17,7 @@
   
   <div v-for="img, i in imgPath" :key="i">
     <img :src="img">
-    <h4 v-on:click="modalOpen = !modalOpen">{{ content[i].title }}</h4>
+    <h4 v-on:click="changeState">{{ content[i].title }}</h4>
     <p>{{ prices[i] }} 만원</p>
   </div>
 </template>
@@ -43,6 +43,9 @@ export default {
   methods : {
     addFakeCnt(num) {
       this.fakeCnt[num]++;
+    },
+    changeState() {
+      this.modalOpen = !this.modalOpen;
     }
   },
   components: {
