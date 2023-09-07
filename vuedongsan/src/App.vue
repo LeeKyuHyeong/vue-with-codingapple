@@ -15,12 +15,10 @@
     </a>
   </div>
   
-  <div v-for="product, i in products" :key="i">
-    <img src="./assets/room0.jpg" alt="house">
-    <h4 v-on:click="modalOpen = !modalOpen">{{ product }} 원룸</h4>
+  <div v-for="img, i in imgPath" :key="i">
+    <img :src="img">
+    <h4 v-on:click="modalOpen = !modalOpen">{{ content[i].title }}</h4>
     <p>{{ prices[i] }} 만원</p>
-    <span>사기매물 신고 : {{ fakeCnt[i] }}</span>&nbsp;
-    <button class="warn" v-on:click="addFakeCnt(i)">신고</button>
   </div>
 </template>
 
@@ -35,10 +33,11 @@ export default {
     return {
       modalOpen : false,
       menus : ["Home", "Shop", "About"],
-      imgPath : ["./assets/room0.jpg", "./assets/room1.jpg", "./assets/room2.jpg"],
+      imgPath : [require("./assets/room0.jpg"), require("./assets/room1.jpg"), require("./assets/room2.jpg")],
       prices : [60, 70, 80],
       fakeCnt : [0, 0, 0],
-      products : ['역삼동원룸', '천호동원룸', '마포구원룸']
+      products : ['역삼동원룸', '천호동원룸', '마포구원룸'],
+      content : content,
     }
   },
   methods : {
