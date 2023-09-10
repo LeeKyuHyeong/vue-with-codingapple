@@ -1,31 +1,27 @@
 <template>
-
-  <div v-if="modalOpen" class="black-bg">
-    <div class="white-bg">
-      <button v-on:click="changeState">닫기</button>
-      <h4>상세페이지</h4>
-      <p>상세페이지 내용</p>
-    </div>
-  </div>
-
   
+  <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="content" :modalOpen="modalOpen" />
+
   <div class="menu">
     <a v-for="menu,i in menus" :key="i">
       {{ menu }}
     </a>
   </div>
+
+  <DisCount />
+
+  <Product @openModal="modalOpen = true; selNum = $event;" v-for="(원룸, i) in content" :key="i" :원룸="content[i]" />
   
-  <div v-for="img, i in imgPath" :key="i">
-    <img :src="img">
-    <h4 v-on:click="changeState">{{ content[i].title }}</h4>
-    <p>{{ prices[i] }} 만원</p>
-  </div>
+
+
 </template>
 
 <script>
 
 import content from './data/post.js';
-console.log(content);
+import DisCount from './components/DiscountDiv';
+import Modal from './components/ModalView';
+import Product from './components/ProductView';
 
 export default {
   name: 'App',
@@ -33,22 +29,23 @@ export default {
     return {
       modalOpen : false,
       menus : ["Home", "Shop", "About"],
-      imgPath : [require("./assets/room0.jpg"), require("./assets/room1.jpg"), require("./assets/room2.jpg")],
-      prices : [60, 70, 80],
       fakeCnt : [0, 0, 0],
-      products : ['역삼동원룸', '천호동원룸', '마포구원룸'],
       content : content,
+      selNum : 0,
     }
   },
   methods : {
-    addFakeCnt(num) {
-      this.fakeCnt[num]++;
-    },
     changeState() {
       this.modalOpen = !this.modalOpen;
-    }
+    },
+    changeSelNum(num) {
+      this.selNum = num;
+    },
   },
   components: {
+    DisCount : DisCount,
+    Modal : Modal,
+    Product : Product,
   }
 }
 </script>
@@ -59,6 +56,12 @@ body {
 }
 div {
   box-sizing: border-box;
+}
+.discount {
+  background: #eee;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
 }
 .black-bg {
   width: 100%;
