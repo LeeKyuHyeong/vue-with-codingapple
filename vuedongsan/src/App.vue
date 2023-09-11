@@ -1,6 +1,9 @@
 <template>
   
-  <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="content" :modalOpen="modalOpen" />
+  <div class="start" :class="{ end : modalOpen}">
+    <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="content" :modalOpen="modalOpen" />
+  </div>
+
 
   <div class="menu">
     <a v-for="menu,i in menus" :key="i">
@@ -76,7 +79,13 @@ div {
   border-radius: 8px;
   padding: 20px;
 }
-
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+.end {
+  opacity: 1;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -5,7 +5,8 @@
       <h4>{{content[selNum].title}}</h4>
       <p>{{content[selNum].content}}</p>
       <!-- <input @input="month = $event.target.value" type="text" name="month" /> 개월 -->
-      <input v-model.number="month" /> 개월
+      <input v-model.number="month" />
+      <input type="range" name="monthRage" min="1" max="12" >
       
       <p class="tot-price">{{month}} 개월 선택함 : {{Number(month) * content[selNum].price}} 원</p>
       <button @click="$emit('closeModal')">닫기</button>
@@ -29,8 +30,9 @@ export default {
     }
   },
   watch : {
-    month : function() {
-      return this.month = this.month.replace(/[^0-9]/g, '');
+    monthRage(val) {
+      console.log(val);
+      this.month = val;
     }
   }
 }
