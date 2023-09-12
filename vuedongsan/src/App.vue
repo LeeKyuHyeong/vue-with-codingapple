@@ -1,8 +1,8 @@
 <template>
   
-  <div class="start" :class="{ end : modalOpen}">
-    <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="content" :modalOpen="modalOpen" />
-  </div>
+  <transition name="modalUi">
+    <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="contentChange" :modalOpen="modalOpen" />
+  </transition>
 
 
   <div class="menu">
@@ -11,9 +11,14 @@
     </a>
   </div>
 
-  <DisCount />
+  <Discount v-if="showDiscount" :discountNum="discountNum"/>
 
-  <Product @openModal="modalOpen = true; selNum = $event;" v-for="(원룸, i) in content" :key="i" :원룸="content[i]" />
+  <button @click="sortPrice">가격오름차순</button>
+  <button @click="reverseSortPrice">가격내림차순</button>
+  <button @click="sortTitle">제목내림차순</button>
+  <button @click="sortBack">되돌리기</button>
+
+  <Product @openModal="modalOpen = true; selNum = $event;" v-for="(원룸, i) in contentChange" :key="i" :원룸="contentChange[i]" />
   
 
 
@@ -22,7 +27,7 @@
 <script>
 
 import content from './data/post.js';
-import DisCount from './components/DiscountDiv';
+import Discount from './components/DiscountDiv';
 import Modal from './components/ModalView';
 import Product from './components/ProductView';
 
@@ -30,11 +35,14 @@ export default {
   name: 'App',
   data() {
     return {
+      contentOrigin : [...content],
       modalOpen : false,
+      showDiscount : true,
       menus : ["Home", "Shop", "About"],
       fakeCnt : [0, 0, 0],
-      content : content,
+      contentChange : content,
       selNum : 0,
+      discountNum : 20,
     }
   },
   methods : {
@@ -44,9 +52,37 @@ export default {
     changeSelNum(num) {
       this.selNum = num;
     },
+    sortBack() {
+      this.contentChange = [...this.contentOrigin];
+    },
+    sortPrice() {
+      this.contentChange.sort(function(a, b) {
+        return a.price - b.price;
+      });
+    },
+    sortTitle() {
+      this.contentChange.sort(function(a, b) {
+        // return a.title - b.title;
+        return a.title.localeCompare(b.title);
+      });
+    },
+    reverseSortPrice() {
+      this.contentChange.sort(function(a, b) {
+        return b.price - a.price;
+      });
+    },
   },
+
+  created() {
+
+  },
+
+  mounted() {
+    setInterval(() => {this.discountNum--;}, 1000);
+  },
+
   components: {
-    DisCount : DisCount,
+    Discount : Discount,
     Modal : Modal,
     Product : Product,
   }
@@ -79,14 +115,28 @@ div {
   border-radius: 8px;
   padding: 20px;
 }
-.start {
-  opacity: 0;
+.modalUi-enter-from {
+  /* 시작 */
+  transform: translateY(-100vh);
+}
+.modalUi-enter-active {
   transition: all 1s;
 }
-.end {
-  opacity: 1;
+.modalUi-enter-to {
+  /* 끝 */
+  transform: translateY(0vh);
 }
-
+.modalUi-leave-from {
+  /* 시작 */
+  scale: 1;
+}
+.modalUi-leave-active {
+  transition: all 1s;
+}
+.modalUi-leave-to {
+  /* 끝 */
+  scale: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
