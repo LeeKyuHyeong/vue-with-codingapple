@@ -1,5 +1,5 @@
 <template>
-  
+  <div>
   <transition name="modalUi">
     <Modal @closeModal="modalOpen = false;" :selNum="selNum" :content="contentChange" :modalOpen="modalOpen" />
   </transition>
@@ -21,7 +21,7 @@
   <Product @openModal="modalOpen = true; selNum = $event;" v-for="(원룸, i) in contentChange" :key="i" :원룸="contentChange[i]" />
   
 
-
+</div>
 </template>
 
 <script>
