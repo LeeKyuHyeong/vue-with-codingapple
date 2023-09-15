@@ -1,9 +1,11 @@
 <template>
   <div class="Card" v-for="(project) in Projects" :key="project.number">
-    <h5>{{ project.title }}</h5>
+    <router-link to="/detail"><h5>{{ project.title }}</h5></router-link>
     <span>{{ project.content }}</span>
     <p>{{ project.date }}</p>
   </div>
+
+  
 </template>
 
 <script>

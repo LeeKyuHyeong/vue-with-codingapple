@@ -9,10 +9,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <router-link to="/" class="nav-link active">Home</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">게시판</a>
+            <router-link to="/list" class="nav-link">게시판</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">내정보</a>
@@ -22,6 +22,7 @@
       </div>
     </div>
   </nav>
+
 
   <router-view :Projects="Projects"></router-view>
 
