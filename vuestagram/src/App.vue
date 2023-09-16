@@ -11,6 +11,7 @@
   </div>
 
   <Container :userInfo="userInfo" />
+  <button>더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -23,12 +24,16 @@
 <script>
 import Container from "./components/Container.vue";
 import userInfo from "./assets/info.js";
+import axios from "axios";
 
 export default {
   name: "App",
   data() {
     return {
       userInfo: userInfo,
+      additionalInfo: axios.get(
+        "https://codingapple1.github.io/vue/more0.json"
+      ),
     };
   },
   components: {
