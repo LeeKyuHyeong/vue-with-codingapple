@@ -5,17 +5,28 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li @click="step++">Next</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :userInfo="userInfo" />
-  <button>더보기</button>
+  <div class="sub-menu">
+    <button class="sub" @click="setStep(1)">page1</button>
+    <button class="sub" @click="setStep(2)">page2</button>
+    <button class="sub" @click="setStep(3)">page3</button>
+  </div>
+
+  <Container :userInfo="userInfo" :step="step" :url="url" />
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input
+        @change="upload"
+        accept="image/*"
+        type="file"
+        id="file"
+        class="inputfile"
+      />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -31,13 +42,33 @@ export default {
   data() {
     return {
       userInfo: userInfo,
-      additionalInfo: axios.get(
-        "https://codingapple1.github.io/vue/more0.json"
-      ),
+      step: 1,
+      url: "",
     };
   },
   components: {
     Container,
+  },
+  methods: {
+    additionalInfo(num) {
+      axios
+        .get(`https://codingapple1.github.io/vue/more${num}.json`)
+        .then((data) => {
+          console.log(data.data);
+          this.userInfo.push(data.data);
+        });
+    },
+    setStep(num) {
+      this.step = num;
+    },
+    upload(e) {
+      console.log(e.target.files);
+      let url = URL.createObjectURL(e.target.files[0]);
+
+      console.log(url);
+      this.url = url;
+      this.setStep(2);
+    },
   },
 };
 </script>
@@ -82,6 +113,13 @@ ul {
   cursor: pointer;
   margin-top: 10px;
 }
+.sub-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
 .footer {
   width: 100%;
   position: sticky;
@@ -118,5 +156,22 @@ ul {
   position: relative;
   border-right: 1px solid #eee;
   border-left: 1px solid #eee;
+}
+.btn-tap {
+  width: 100px;
+  height: 35px;
+  border: none;
+  padding: 5px;
+}
+.btn-tap.active {
+  border: 1px solid #d4d4d6;
+  background: #000;
+  color: #fff;
+}
+.cont {
+  opacity: 0;
+}
+.cont.active {
+  opacity: 1;
 }
 </style>
