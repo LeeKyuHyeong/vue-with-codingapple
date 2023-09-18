@@ -2,10 +2,11 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li @click="step = 1">Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li @click="step++">Next</li>
+      <li v-if="step == 2" @click="step++">Next</li>
+      <li v-if="step == 3" @click="addPost">등록</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
@@ -16,7 +17,7 @@
     <button class="sub" @click="setStep(3)">page3</button>
   </div>
 
-  <Container :userInfo="userInfo" :step="step" :url="url" />
+  <Container :userInfo="userInfo" :step="step" :url="url" @setCont="setCont" />
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -44,6 +45,7 @@ export default {
       userInfo: userInfo,
       step: 1,
       url: "",
+      cont: "",
     };
   },
   components: {
@@ -68,6 +70,23 @@ export default {
       console.log(url);
       this.url = url;
       this.setStep(2);
+    },
+    addPost() {
+      var myData = {
+        name: "Positive_Lee",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.url,
+        likes: 0,
+        date: "Aug 18",
+        liked: false,
+        content: this.cont,
+        filter: "perpetua",
+      };
+      this.userInfo.unshift(myData);
+      this.step = 1;
+    },
+    setCont(val) {
+      this.cont = val;
     },
   },
 };
