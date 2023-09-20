@@ -11,16 +11,6 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <!-- <div>{{ $store.state.more }}</div>
-  <button @click="getData">더보기버튼</button>
-
-  <h4>{{ likes }}</h4>
-  <h4>{{ name }}</h4>
-  <button @click="changeName">이름변경</button>
-  <p>{{ $store.state.age }}</p>
-  <button @click="addAge">나이추가</button>
-  <button @click="resetAge">리셋</button> -->
-
   <Container
     :userInfo="userInfo"
     :step="step"
@@ -54,7 +44,7 @@ export default {
   data() {
     return {
       userInfo: userInfo,
-      step: 1,
+      step: 4,
       url: "",
       cont: "",
       filter: "",
