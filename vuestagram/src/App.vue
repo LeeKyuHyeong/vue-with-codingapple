@@ -11,11 +11,15 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <!-- <div class="sub-menu">
-    <button class="sub" @click="setStep(1)">page1</button>
-    <button class="sub" @click="setStep(2)">page2</button>
-    <button class="sub" @click="setStep(3)">page3</button>
-  </div> -->
+  <!-- <div>{{ $store.state.more }}</div>
+  <button @click="getData">더보기버튼</button>
+
+  <h4>{{ likes }}</h4>
+  <h4>{{ name }}</h4>
+  <button @click="changeName">이름변경</button>
+  <p>{{ $store.state.age }}</p>
+  <button @click="addAge">나이추가</button>
+  <button @click="resetAge">리셋</button> -->
 
   <Container
     :userInfo="userInfo"
@@ -43,6 +47,7 @@
 import Container from "./components/Container.vue";
 import userInfo from "./assets/info.js";
 import axios from "axios";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
@@ -53,6 +58,7 @@ export default {
       url: "",
       cont: "",
       filter: "",
+      cnt: 0,
     };
   },
   mounted() {
@@ -64,7 +70,13 @@ export default {
   components: {
     Container,
   },
+  computed: {
+    ...mapState(["name", "age", "likes", "liked"]),
+  },
   methods: {
+    ...mapMutations(["changeName", "addAge", "resetAge"]),
+    ...mapActions(["getData"]),
+
     additionalInfo(num) {
       axios
         .get(`https://codingapple1.github.io/vue/more${num}.json`)
@@ -102,6 +114,10 @@ export default {
     setCont(val) {
       this.cont = val;
     },
+    // changeName() {
+    //   const [name, setName] = useState("");
+    //   setName("gj");
+    // },
   },
 };
 </script>
