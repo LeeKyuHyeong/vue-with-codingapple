@@ -11,13 +11,19 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <div class="sub-menu">
+  <!-- <div class="sub-menu">
     <button class="sub" @click="setStep(1)">page1</button>
     <button class="sub" @click="setStep(2)">page2</button>
     <button class="sub" @click="setStep(3)">page3</button>
-  </div>
+  </div> -->
 
-  <Container :userInfo="userInfo" :step="step" :url="url" @setCont="setCont" />
+  <Container
+    :userInfo="userInfo"
+    :step="step"
+    :url="url"
+    @setCont="setCont"
+    :filter="filter"
+  />
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -46,7 +52,14 @@ export default {
       step: 1,
       url: "",
       cont: "",
+      filter: "",
     };
+  },
+  mounted() {
+    this.emitter.on("sendFilter", (a) => {
+      console.log(a);
+      this.filter = a;
+    });
   },
   components: {
     Container,
@@ -80,10 +93,11 @@ export default {
         date: "Aug 18",
         liked: false,
         content: this.cont,
-        filter: "perpetua",
+        filter: this.filter,
       };
       this.userInfo.unshift(myData);
       this.step = 1;
+      this.filter = "";
     },
     setCont(val) {
       this.cont = val;
