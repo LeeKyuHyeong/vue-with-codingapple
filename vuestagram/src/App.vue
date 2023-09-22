@@ -37,7 +37,7 @@
 import Container from "./components/Container.vue";
 import userInfo from "./assets/info.js";
 import axios from "axios";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
@@ -64,9 +64,6 @@ export default {
     ...mapState(["name", "age", "likes", "liked"]),
   },
   methods: {
-    ...mapMutations(["changeName", "addAge", "resetAge"]),
-    ...mapActions(["getData"]),
-
     additionalInfo(num) {
       axios
         .get(`https://codingapple1.github.io/vue/more${num}.json`)
