@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     textVal(e) {
-      console.log(e.target.value);
       let cont = e.target.value;
       this.$emit("setCont", cont);
     },

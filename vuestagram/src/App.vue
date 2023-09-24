@@ -53,7 +53,6 @@ export default {
   },
   mounted() {
     this.emitter.on("sendFilter", (a) => {
-      console.log(a);
       this.filter = a;
     });
   },
@@ -68,7 +67,6 @@ export default {
       axios
         .get(`https://codingapple1.github.io/vue/more${num}.json`)
         .then((data) => {
-          console.log(data.data);
           this.userInfo.push(data.data);
         });
     },
@@ -76,10 +74,8 @@ export default {
       this.step = num;
     },
     upload(e) {
-      console.log(e.target.files);
       let url = URL.createObjectURL(e.target.files[0]);
 
-      console.log(url);
       this.url = url;
       this.setStep(2);
     },
@@ -101,10 +97,6 @@ export default {
     setCont(val) {
       this.cont = val;
     },
-    // changeName() {
-    //   const [name, setName] = useState("");
-    //   setName("gj");
-    // },
   },
 };
 </script>
