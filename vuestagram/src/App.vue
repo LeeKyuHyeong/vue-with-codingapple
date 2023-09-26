@@ -52,8 +52,8 @@ export default {
     };
   },
   mounted() {
-    this.emitter.on("sendFilter", (a) => {
-      this.filter = a;
+    this.emitter.on("sendFilter", (abc) => {
+      this.filter = abc;
     });
   },
   components: {
