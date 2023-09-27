@@ -49,6 +49,7 @@ export default {
       cont: "",
       filter: "",
       cnt: 0,
+      isNull: false,
     };
   },
   mounted() {
